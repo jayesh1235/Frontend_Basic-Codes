@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!--<link href="pratice_css.css" rel="stylesheet" />-->
+    <script>
+        var student = [];
+        var color = "";
+        function AddData() {
+            var n = document.getElementById("t1").value;
+            var nm = n.toUpperCase();
+            var prn = document.getElementById("t2").value;
+            var e = Number(document.getElementById("t3").value);
+            var s = Number(document.getElementById("t4").value);
+            var m = Number(document.getElementById("t5").value);
+            var t = Number(document.getElementById("t6").value);
+            var per = Number(document.getElementById("t7").value);
+            var r = document.getElementById("t8").value;
+
+            var temp = { "Name": nm, "prnno": prn, "English": e, "Science": s, "Maths": m, "Total": t, "Percentage": per, "Result": r, "clr": color };
+            student.push(temp)
+            ClearData();
+            DataDisplay();
+        }
+        function Calculate() {
+            var e = Number(document.getElementById("t3").value);
+            var s = Number(document.getElementById("t4").value);
+            var m = Number(document.getElementById("t5").value);
+
+            var t = (e + s + m);
+            document.getElementById("t6").value = t;
+
+            var per = (t / 3).toFixed(2);
+            document.getElementById("t7").value = per;
+            var r = "";
+            if (per >= 40 && per <= 50) {
+                r = "Pass";
+                color = "Green";
+            }
+            else {
+                if (per >= 51 && per <= 60) {
+                    r = "Second Class";
+                    color = "brown";
+                }
+                else {
+                    if (per >= 61 && per <= 70) {
+                        r = "First Class";
+                        color = "blue";
+                    }
+                    else {
+                        if (per >= 71) {
+                            r = "First Class With Distinction";
+                            color = "cyan";
+                        }
+                        else {
+                            r = "Fail";
+                            color = "Red"
+                        }
+                    }
+                }
+            }
+        document.getElementById("t8").value = r;
+
+        }
+        function ClearData() {
+            document.getElementById("t1").value = "";
+            document.getElementById("t2").value = "";
+            document.getElementById("t3").value = "";
+            document.getElementById("t4").value = "";
+            document.getElementById("t5").value = "";
+        }
+        function DataDisplay() {
+            var d = "";
+            for (i = 0; i < student.length; i++) {
+                d += "<tr style='color:"+student[i].clr+"'><td>" + student[i].Name + "</td><td>" + student[i].prnno + "</td><td>" + student[i].English + "</td><td>" + student[i].Science + "</td><td>" + student[i].Maths + "</td><td>" + student[i].Total + "</td><td>" + student[i].Percentage + "</td><td>" + student[i].Result + "</td></tr>"
+            }
+            document.getElementById("tbldata").innerHTML = d;
+        }
+        /*function Grade(per) {
+            var r = "";
+            if (per >= 40 && per <= 50) {
+                r = "Pass";
+                var color = "Green";
+            }
+            else {
+                if (per >= 51 && per <= 60) {
+                    r = "Second Class";
+                    color = "Lightblue";
+                }
+                else {
+                    if (per >= 61 && per <= 70) {
+                        r = "First Class";
+                        color = "g"
+                    }
+                    else {
+                        if (per >= 71) {
+                            r = "First Class With Distinction";
+                            return r;
+                        }
+                        else {
+                            r = "Fail";
+                            return r;
+                        }
+                    }
+                }
+            }
+        }*/
+
+    </script>
+</head>
+<body>
+    <div class="css1">
+        <div class="col-md-6">
+            <div class="panel-primary">
+                <div class="panel-heading">
+                    <h1 class="panel-title"><i>Student Result</i></h1>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel-body">
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th><input class="form-control" placeholder="Name" type="text" id="t1" /></th>
+                        </tr>
+                        <tr>
+                            <th>Prn</th>
+                            <th><input class="form-control" placeholder="Prn No." type="text" id="t2" /></th>
+                        </tr>
+                        <tr>
+                            <th>English</th>
+                            <th><input class="form-control" type="number" id="t3" onchange="Calculate()" /></th>
+                        </tr>
+                        <tr>
+                            <th>Science</th>
+                            <th><input class="form-control" type="number" id="t4" onchange="Calculate()" /></th>
+                        </tr>
+                        <tr>
+                            <th>Maths</th>
+                            <th><input class="form-control" type="number" id="t5" onchange="Calculate()" /></th>
+                        </tr>
+                        <tr>
+                            <th>Total</th>
+                            <th><input class="form-control" type="number" id="t6" disabled /></th>
+                        </tr>
+                        <tr>
+                            <th>Percentage</th>
+                            <th><input class="form-control" type="number" id="t7" disabled /></th>
+                        </tr>
+                        <tr>
+                            <th>Result</th>
+                            <th><input class="form-control" type="text" id="t8" disabled /></th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel-footer">
+                    <button class="btn btn-default" data-toggle="modal" data-target="#mymodal1" onclick="AddData()">Sumbit</button>
+                    <div class="modal" id="mymodal1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button class="close" data-dismiss="modal">&times;</button>
+                                    <h1 class="modal-title">Fromed Submitted..!</h1>
+                                </div>
+                                <div class="modal-body">
+                                    The Formed Submitted Sucessfully
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-warning" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-default" data-toggle="modal" data-target="#mymodal2" onclick="DataDestroy()">Clear data</button>
+                    <div class="modal" id="mymodal2">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button class="close" data-dismiss="modal">&times;</button>
+                                    <h1 class="modal-title">Data Cleared</h1>
+                                </div>
+                                <div class="modal-body">
+                                    The Data Cleared Sucessfully..!!
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-warning" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <hr />
+            </div>
+            <div class="col-md-12">
+                <table border="1" cellpadding="5" cellspacing="1" class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Prn No.</th>
+                            <th>English</th>
+                            <th>Science</th>
+                            <th>Maths</th>
+                            <th>Total</th>
+                            <th>Percentage</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbldata"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="js/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            fetchstate();
+            $("#ddstate").change(function () {
+                fetchcity();
+            })
+        })
+        function fetchstate() {
+            $.getJSON("State.txt", function (f) {
+                $.each(f, function (i, d) {
+                    $("#ddstate").append("<option value=" + d.Stateid + ">" + d.StateName + "</option>")
+                })
+            })
+        }
+        function fetchcity() {
+            var s = $("#ddstate").val();
+            $("#ddcity").empty();
+            $("#ddcity").append("<option selected disabled>Select city</option>");
+            $.getJSON("City.txt", function (dt) {
+                $.each(dt, function (i, d) {
+                    if (s == d.Stateid) {
+                        $("#ddcity").append("<option value=" + d.CityId + ">" + d.CityName + "</option>")
+                    }
+                })
+            })
+        }
+
+
+
+    </script>
+</head>
+<body>
+   <select id="ddstate">
+       <option selected disabled>Select State</option>
+   </select>
+    <select id="ddcity">
+        <option selected disabled>Select city</option>
+    </select>
+</body>
+</html>

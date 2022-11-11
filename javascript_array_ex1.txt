@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script>
+        var a = [];
+        function array_fun() {
+            var b = document.getElementById("t1").value;
+            var s = a.indexOf(b.toUpperCase());
+            //alert(s);
+            if (s == -1) {
+                a.push(b.toUpperCase());
+            }
+            else {
+                alert("Already Exist");
+            }
+        
+            document.getElementById("t1").value = "";
+            var data = "";
+            for (i = 0; i < a.length; i++) {
+                data += "<li>" + a[i] + "</li>";
+            }
+            document.getElementById("a1").innerHTML = data;
+        }
+    </script>
+</head>
+<body>
+    <input type="text" id="t1" />
+    <input type="button" value="sumbit" onclick="array_fun()" /><br />
+    <ul id="a1"></ul>
+</body>
+</html>

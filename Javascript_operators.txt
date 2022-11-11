@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script>
+        // Function of JavaScript 
+        // Add_fun used to call the function whenever it is called
+        function Add_fun() {
+            // initiallizing variable
+            var a = Number(document.getElementById("value_1").value);
+            var b = Number(document.getElementById("value_2").value);
+           
+            //performing Adiition by using add_val variable
+            var add_val = a + b;
+            // this command used for printing/getting the value by element id.
+            document.getElementById("fun_op1").innerHTML = "Add is = " + add_val;
+        }
+        // Another function for Sub
+        function Sub_fun() {
+            var a = Number(document.getElementById("value_1").value);
+            var b = Number(document.getElementById("value_2").value);
+            var sub_val = a - b;
+            document.getElementById("fun_op1").innerHTML = "Sub is = " + sub_val;
+        }
+        function Mul_fun() {
+            var a = Number(document.getElementById("value_1").value);
+            var b = Number(document.getElementById("value_2").value);
+            var Mul_val = a * b;
+            document.getElementById("fun_op1").innerHTML = "Mul is = " + Mul_val;
+        }
+        function Div_fun() {
+            var a = Number(document.getElementById("value_1").value);
+            var b = Number(document.getElementById("value_2").value);
+            var Div_val = a / b;
+            document.getElementById("fun_op1").innerHTML = "Div is = " + Div_val;
+        }
+    </script>
+</head>
+<body>
+    A <input type="text" id="value_1" /><br />
+    B <input type="text" id="value_2" /><br />
+    
+    <br />
+    <input type="button" value="Add" onclick="Add_fun()" />
+    <input type="button" value="Sub" onclick="Sub_fun()" />
+    <input type="button" value="Div" onclick="Div_fun()" />
+    <input type="button" value="Mul" onclick="Mul_fun()" />
+            <h1 id="fun_op1"></h1>
+            
+            
+</body>
+</html>
+           

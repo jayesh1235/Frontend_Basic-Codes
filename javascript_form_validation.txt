@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script>
+        function data() {
+            var status = true;
+            var eid = document.forms["ef"]["Eid"].value;
+            var enm = document.forms["ef"]["Ename"].value;
+            if (eid == "") {
+                status = false;
+                document.getElementById("sid1").innerHTML = "please Enter the ID";
+                return status;
+            }
+            else {
+                var eidn = /^[0-9]+$/;
+                if (!eid.match
+
+                    (eidn)) {
+                    document.getElementById("sid1").innerHTML = "only Number allowed";
+
+                }
+                else {
+                    status = true;
+                    document.getElementById("sid1").innerHTML = "";
+                }
+            }
+            if (enm == "") {
+                status = false;
+                document.getElementById("sid2").innerHTML = "please enter the e Name";
+                return status;
+            }
+            else {
+                var enmc = /^[a-zA-Z]+$/;
+                if(!enm.match(enmc)){
+                    status = false;
+                    document.getElementById("sid2").innerHTML = "only character allowed";
+                    return status;
+                }
+                else {
+                    status = true;
+                    document.getElementById("sid2").innerHTML = "";
+                }
+            }
+            if (eid != "123" && enm != "abc") {
+                status = false;
+                document.getElementById("a1").innerHTML = "Invalid";
+                return status;
+            }
+            else {
+                status = true;
+                document.getElementById("a1").innerHTML = "";
+            }
+
+        }
+    </script>
+</head>
+<body>
+    <form name="ef" action="logout1.html" method="get" onsubmit="return data()">
+        <table border="1">
+            <tr>
+                <th>Employee ID</th>
+                <th><input type="text" name="Eid" /></th>
+                <th><span id="sid1" style="color:red"></span></th>
+            </tr>
+            <tr>
+                <th>Employee Name</th>
+                <th><input type="text" name="Ename" /></th>
+                <th><span id="sid2" style="color:red"></span></th>
+            </tr>
+            <tr>
+                <th>
+                    <input type="submit" value="submit" oncl />
+                    <input type="reset" value="Reset" />
+                </th>
+
+            </tr>
+        </table>
+        <h1 id="a1"></h1>
+
+    </form>
+
+</body>
+</html>

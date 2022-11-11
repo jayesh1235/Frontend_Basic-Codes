@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="js/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#btnsumbit").click(function () {
+                $.getJSON("TextFile.txt", function (d) {
+                    $.each(d, function (i,d) {
+                        $("#tbldata").append("<tr><td>"+d.rollno+"</td><td>"+d.name+"</td><td>"+d.address+"</td></tr>")
+                    })
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+    <input type="button" value="sumbit" id="btnsumbit" />
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Roll No</th>
+                <th>Name</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tbody id="tbldata"></tbody>
+    </table>
+</body>
+</html>

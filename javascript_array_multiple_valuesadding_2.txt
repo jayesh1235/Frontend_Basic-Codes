@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script>
+        var stud = [];
+        function AddData() {
+            var r = document.getElementById("t1").value;
+            var n = document.getElementById("t2").value;
+            var a = document.getElementById("t3").value;
+            var st = { "rollno": r, "name": n, "address": a };
+            stud.push(st);
+            ClearData();
+            DataDisplay();
+        }
+        function ClearData() {
+            document.getElementById("t1").value = "";
+            document.getElementById("t2").value = "";
+            document.getElementById("t3").value = "";
+
+        }
+        function DataDisplay() {
+            var d = "";
+            for (var i = 0; i < stud.length; i++) {
+                d += "<tr><td>" + stud[i].rollno + "</td><td>" + stud[i].name + "</td><td>" + stud[i].address + "</td></tr>";
+
+            }
+            document.getElementById("Data_display").innerHTML = d;
+        }
+    </script>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Roll no.</th>
+            <th><input type="text" id="t1" /></th>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <th><input type="text" id="t2" /></th>
+        </tr>
+        <tr>
+            <th>Address</th>
+            <th><input type="text" id="t3" /></th>
+        </tr>
+
+    </table>
+    <input type="button" value="Sumbit" onclick="AddData()" />
+    <hr />
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Roll no.</th>
+                <th>Name</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tbody id="Data_display"></tbody>
+    </table>
+</body>
+</html>

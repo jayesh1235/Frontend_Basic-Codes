@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Product Details</title>
+    <script>
+        var product_detial = [];
+        var stock = 100;
+        function NetTotal() {
+            var q = Number(document.getElementById("q1").value);
+            var r = Number(document.getElementById("r1").value);
+
+            var total = q * r;
+            document.getElementById("t1").value = total;
+            stock = stock - q;
+            document.getElementById("as1").value = stock;
+
+        }
+        function DisplayTable(){
+            var p_nm = document.getElementById("p1").value;
+            //var p = p_nm.options(p_nm.selectedIndex).text;
+            var q = document.getElementById("q1").value;
+            var r = document.getElementById("r1").value;
+            var as = document.getElementById("as1").value;
+            var t = document.getElementById("t1").value;
+
+            var st = { "productName": p_nm, "Quantity": q, "Rate": r, "AvailableStock": as, "Total": t };
+            product_detial.push(st);
+            ClearData();
+            ProductName();
+            DataDisplay();
+        }
+        function ClearData() {
+            document.getElementById("p1").value = "";
+            document.getElementById("q1").value = "";
+            document.getElementById("r1").value = "";
+            document.getElementById("t1").value = "";
+        }
+        function DataDisplay() {
+            var data = "";
+            product_detial.forEach(function (d, i) {
+                data += "<tr><td>" + (i + 1) + "</td><td>" + d.productName + "</td><td>" + d.Quantity + "</td><td>" + d.Rate + "</td><td>" + d.AvailableStock + "</td><td>" + d.Total + "</td></tr>";
+            })
+            document.getElementById("Tbldata").innerHTML = data;
+        }
+        var prd = [{ "Productname": "Pen" }, { "Productname": "Pencil" }, { "Productname": "Eraser" }, { "Productname": "Shapner" } ];
+        function ProductName() {
+            var data = "<option selected disabled>Select Product</option>";
+            prd.forEach(function (d, i)
+            {
+                data+="<option>"+ d.Productname+"</option>";
+
+            })
+            document.getElementById("p1").innerHTML = data;
+
+        }
+    </script>
+</head>
+<body onload="ProductName()">
+    <table>
+        <tr>
+            <th>Product Name</th>
+            <th>
+                <select id="p1">
+                    <option selected disabled>Select Product</option>
+                </select>
+            </th>
+            </tr>
+        <tr>
+            <th>Quantiy</th>
+            <th><input type="number" id="q1" /></th>
+        </tr>
+        <tr>
+            <th>Rate</th>
+            <th><input type="number" id="r1" onchange="NetTotal()"  /></th>
+        </tr>
+        <tr>
+            <th>Avaliable Stock</th>
+            <th><input type="number" id="as1" disabled /></th>
+        </tr>
+        <tr>
+            <th>Total</th>
+            <th><input type="number" id="t1" disabled /></th>
+        </tr>
+        <tr>
+            <th><input type="button" value="Submit" onclick="DisplayTable()" /></th>
+        </tr>
+    </table>
+    <hr />
+    <table border="1"> 
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Rate</th>
+                <th>Available Stock</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody id="Tbldata"></tbody>
+    </table>
+</body>
+</html>

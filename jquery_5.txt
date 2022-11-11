@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="js/jquery.min.js"></script>
+    <script>
+        var student = [];
+        var index = "";
+        $(document).ready(function () {
+            $("#t3,#t4,#t5").change(function () {
+                Calculate();
+            })
+            $("#btnsumbit").click(function () {
+                addData();
+            })
+            $("#btnupdate").click(function () {
+                UpdateData();
+            })
+        })
+        function addData() {
+            var r = $("#t1").val();
+            var n = $("#t2").val();
+            var e = $("#t3").val();
+            var m = $("#t4").val();
+            var s = $("#t5").val();
+            var t = $("#t6").val();
+            var p = $("#t7").val();
+            var r1 = $("#t8").val();
+
+            var st = { "rollno": r, "name": n, "english": e, "maths": m, "science": s, "total": t, "percentage": p, "result": r1 };
+            student.push(st);
+            ClearData();
+            DisplayData();
+
+        }
+       
+
+        function Calculate() {
+            var e = Number($("#t3").val());
+            var m = Number($("#t4").val());
+            var s = Number($("#t5").val());
+            var t = (e + m + s);
+            $("#t6").val(t);
+            var p = (t / 3).toFixed(2);
+            $("#t7").val(p);
+            if (p > 35) {
+                $("#t8").val("Pass");
+            }
+            else {
+                $("#t8").val("Fail");
+            }
+        }
+        function ClearData() {
+            $("#t1").val("");
+            $("#t2").val("");
+            $("#t3").val("");
+            $("#t4").val("");
+            $("#t5").val("");
+            $("#t6").val("");
+            $("#t7").val("");
+            $("#t8").val("");
+
+        }
+        function DisplayData() {
+            $("#tbldata").empty();
+            $.each(student, function (i, d) {
+                $("#tbldata").append("<tr><td>" + d.rollno + "</td><td>" + d.name + "</td><td>" + d.english + "</td><td>"
+                    + d.maths + "</td><td>" + d.science + "</td><td>" + d.total + "</td><td>" + d.percentage + "</td><td>"
+                    + d.result + "</td><td>"+"<input type='button' value='edit' onclick='EditData("+i+")'/><input type='button' value='Delete' onclick='DeleteData("+i+")'/>"+"</td></tr>")
+            })
+        }
+        function EditData(s) {
+            index = s;
+            var a = student[s];
+            $("#t1").val(a.rollno);
+            $("#t2").val(a.name);
+            $("#t3").val(a.english);
+            $("#t4").val(a.maths);
+            $("#t5").val(a.science);
+            $("#t6").val(a.total);
+            $("#t7").val(a.percentage);
+            $("#t8").val(a.result);
+        }
+        function UpdateData() {
+
+            var r = $("#t1").val();
+            var n = $("#t2").val();
+            var e = $("#t3").val();
+            var m = $("#t4").val();
+            var s = $("#t5").val();
+            var t = $("#t6").val();
+            var p = $("#t7").val();
+            var r1 = $("#t8").val();
+
+            var st = { "rollno": r, "name": n, "english": e, "maths": m, "science": s, "total": t, "percentage": p, "result": r1 };
+            student[index] = st;
+            ClearData();
+            DisplayData();
+        }
+        function DeleteData(j) {
+            student.splice(j, 1);
+            DisplayData();
+        }
+    </script>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Roll NO</th>
+            <th><input type="text" id="t1" /></th>
+        </tr>
+
+        <tr>
+            <th>Name</th>
+            <th><input type="text" id="t2" /></th>
+        </tr>
+        <tr>
+            <th>English</th>
+            <th><input type="number" id="t3" /></th>
+        </tr>
+        <tr>
+            <th>Maths</th>
+            <th><input type="number" id="t4" /></th>
+        </tr>
+        <tr>
+            <th>Science</th>
+            <th><input type="number" id="t5" /></th>
+        </tr>
+
+        <tr>
+            <th>Total</th>
+            <th><input type="number" id="t6" disabled/></th>
+        </tr>
+
+        <tr>
+            <th>Percentage</th>
+            <th><input type="number" id="t7" disabled/></th>
+        </tr>
+
+        <tr>
+            <th>Result</th>
+            <th><input type="text" id="t8" disabled/></th>
+        </tr>
+        <tr>
+            <th><input type="button" value="sumbit" id="btnsumbit" /></th>
+        </tr>
+        <tr>
+            <th><input type="button" value="Update" id="btnupdate" /></th>
+        </tr>
+
+    </table>
+    <hr />
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Roll NO</th>
+                <th>Name</th>
+                <th>English</th>
+                <th>Maths</th>
+                <th>science</th>
+                <th>Total</th>
+                <th>percentage</th>
+                <th>result</th>
+                <th>Action</th>
+            </tr>
+
+        </thead>
+        <tbody id="tbldata"></tbody>
+    </table>
+</body>
+</html>

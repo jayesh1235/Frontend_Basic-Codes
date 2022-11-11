@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script>
+        var student = [];
+        function studentResult() {
+            var e = Number(document.getElementById("t1").value);
+            var m = Number(document.getElementById("t2").value);
+            var s = Number(document.getElementById("t3").value);
+            var n = document.getElementById("n_1").value;
+            var prn = document.getElementById("p_1").value;
+
+            var tot_mark = e + m + s;
+            var p = (tot_mark / 3).toFixed(2);
+            //var r = (p < 40)?"Fail" : "Pass";
+            var r;
+            if (p < 40)
+            {
+                r = "Fail"
+            }
+            else {
+                r = "Pass"
+            }
+            var temp = { "Name":n,"prnno":prn,"english": e, "maths": m, "science": s, "total":tot_mark, "percentage": p, "result": r };
+            student.push(temp);
+            clearData();
+            dataDisplay();
+        }
+        function clearData() {
+            document.getElementById("t1").value = "";
+            document.getElementById("t2").value = "";
+            document.getElementById("t3").value = "";
+        }
+        function dataDisplay() {
+            var d = "";
+            for (i = 0; i < student.length; i++) {
+                d += "<tr><td>" + student[i].Name + "</td><td>" + student[i].prnno+ "</td><td>" + student[i].english + "</td><td>" + student[i].maths + "</td><td>" + student[i].science + "</td><td>" + student[i].total + "</td><td>" + student[i].percentage + "</td><td>" + student[i].result + "</td></tr>"
+            }
+            document.getElementById("student_rel").innerHTML = d;
+        }
+
+        
+    </script>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th><input type="text" id="n_1" /></th>
+        </tr>
+        <tr>
+            <th>Prn No.</th>
+            <th><input type="text" id="p_1" /></th>
+        </tr>
+        <tr>
+            <th>English</th>
+            <th><input type="text" id="t1" /></th>
+        </tr>
+
+        <tr>
+            <th>Maths</th>
+            <th><input type="text" id="t2" /></th>
+        </tr>
+
+        <tr>
+            <th>Science</th>
+            <th><input type="text" id="t3" /></th>
+        </tr>
+    </table>
+    <input type="button" value="Sumbit" onclick="studentResult()" />
+    <hr />
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Prn No.</th>
+                <th>English</th>
+                <th>Maths</th>
+                <th>Science</th>
+                <th>Total</th>
+                <th>Percentage</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody id="student_rel"></tbody>
+    </table>
+</body>
+</html>

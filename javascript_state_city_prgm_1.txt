@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script>
+        var arr_State = [{ "Stateid": 1, "StateName": "MH" }, { "Stateid": 2, "StateName": "MP" }];
+        function State_fun() {
+            var data = "<option selected disabled>Select State</option>";
+            arr_State.forEach(function (d, i) {
+                data += "<option value="+d.Stateid+">" + d.StateName + "</option>";
+            })
+            document.getElementById("state_nm").innerHTML = data;
+        }
+
+        var arr_city = [{ "CityId": 1, "CityName": "Pune", "Stateid": 1 },
+            { "CityId": 2, "CityName": "Nashik", "Stateid": 1 },
+            { "CityId": 3, "CityName": "Indore", "Stateid": 2 },
+            { "CityId": 4, "CityName": "Bhopal", "Stateid": 2 },
+
+        ];
+        function City_fun() {
+            var state = document.getElementById("state_nm").value;
+            var data = "<option selected disabled>Select City</option>";
+            arr_city.forEach(function (d, i) {
+                if (d.Stateid == state) {
+                    data+="<option value="+d.CityId+">"+d.CityName+"</option>";
+                }
+            })
+            document.getElementById("city_nm").innerHTML = data;
+        }
+        var arr_Area = [{ "Areaid": 1, "AreaName": "Hadapsar", "CityId": 1 },
+            { "Areaid": 2, "AreaName": "Viman Nagar", "CityId": 1 },
+            { "Areaid": 3, "AreaName": "Ashok Nagar", "CityId": 2 },
+            { "Areaid": 4, "AreaName": "Satpur", "CityId": 2 },
+            { "Areaid": 5, "AreaName": "Ashok Nagar", "CityId": 3 },
+            { "Areaid": 6, "AreaName": "Vijay Wadi", "CityId": 4 },
+        ];
+        function Area_fun() {
+            var city = document.getElementById("city_nm").value;
+            var data = "<option selected disabled>Select Area</option>";
+            arr_Area.forEach(function (d, i) {
+                if (d.CityId == city) {
+                    data += "<option value=" + d.Areaid + ">" + d.AreaName + "</option>";
+                }
+            })
+            document.getElementById("area_nm").innerHTML = data;
+        }
+    </script>
+</head>
+<body onload="State_fun()">
+    State
+    <select id="state_nm" onchange="City_fun()">
+        <option selected disabled>Select State</option>
+    </select>
+    <br />
+    City
+    <select id="city_nm" onchange="Area_fun()">
+        <option selected disabled>Select City</option>
+    </select>
+    <br />
+    Area
+    <select id="area_nm">
+        <option selected disabled>Select Area</option>
+    </select>
+</body>
+</html>

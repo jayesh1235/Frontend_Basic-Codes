@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script>
+        var student = [];
+        var color = "";
+        var index = "";
+        function Adddata() {
+            var e = Number(document.getElementById("t1").value);
+            var s = Number(document.getElementById("t2").value);
+            var m = Number(document.getElementById("t3").value);
+            var t = Number(document.getElementById("t4").value);
+            var per = Number(document.getElementById("t5").value);
+            var res = document.getElementById("t6").value;
+            var nm = document.getElementById("n1").value;
+            var rn = document.getElementById("r1").value;
+
+            var s_nm = document.getElementById("state_nm");
+            var statenm = s_nm.options[s_nm.selectedIndex].text;
+            var c_nm = document.getElementById("city_nm");
+            var citynm = c_nm.options[c_nm.selectedIndex].text;
+
+            var st = { "rollno": rn, "Name": nm, "english": e, "science": s, "maths": m, "total": t, "Percentage": per, "Result": res, "clr": color,"stateName":statenm, "cityName": citynm };
+            student.push(st);
+            clearData();
+            State_fun();
+            dataDisplay();
+        }
+        function calculate() {
+            var e = Number(document.getElementById("t1").value);
+            var s = Number(document.getElementById("t2").value);
+            var m = Number(document.getElementById("t3").value);
+
+            var t = (e + s + m);
+            document.getElementById("t4").value = t;
+
+            var per = (t / 3).toFixed(2);
+            document.getElementById("t5").value = per;
+
+            var res = "Fail";
+            color = "Red";
+            if (per > 35) {
+                res = "Pass";
+                color = "Green";
+            }
+            document.getElementById("t6").value = res;
+
+        }
+        function clearData() {
+            document.getElementById("t1").value = "";
+            document.getElementById("t2").value = "";
+            document.getElementById("t3").value = "";
+            document.getElementById("t4").value = "";
+            document.getElementById("t5").value = "";
+            document.getElementById("t6").value = "";
+            document.getElementById("n1").value = "";
+            document.getElementById("r1").value = "";
+            document.getElementById("state_nm").value = "";
+            document.getElementById("city_nm").value = "";
+
+        }
+        function EditData(j) {
+            index = j;
+            var dt = student[j];
+            document.getElementById("r1").value = dt.rollno
+            document.getElementById("n1").value = dt.Name;
+            document.getElementById("t1").value = dt.english;
+            document.getElementById("t2").value = dt.science;
+            document.getElementById("t3").value = dt.maths;
+            document.getElementById("t4").value = dt.total;
+            document.getElementById("t5").value = dt.Percentage;
+            document.getElementById("t6").value = dt.Result;
+            document.getElementById("state_nm").value = dt.stateName;
+            document.getElementById("city_nm").value = dt.cityName;
+        }
+        function UpdateData() {
+            var e = Number(document.getElementById("t1").value);
+            var s = Number(document.getElementById("t2").value);
+            var m = Number(document.getElementById("t3").value);
+            var t = Number(document.getElementById("t4").value);
+            var per = Number(document.getElementById("t5").value);
+            var res = document.getElementById("t6").value;
+            var nm = document.getElementById("n1").value;
+            var rn = document.getElementById("r1").value;
+            var s_nm = document.getElementById("state_nm");
+            var statenm = s_nm.options[s_nm.selectedIndex].text;
+            var c_nm = document.getElementById("city_nm");
+            var citynm = c_nm.options[c_nm.selectedIndex].text;
+
+            var st = { "rollno": rn, "Name": nm, "english": e, "science": s, "maths": m, "total": t, "Percentage": per, "Result": res, "clr": color, "stateName": statenm, "cityName": citynm };
+            student[index] = st;
+            clearData();
+            city_fun();
+            dataDisplay();
+        }
+
+        function DeleteData(j2) {
+            student.splice(j2, 1);
+            dataDisplay();
+        }
+
+        
+
+        function dataDisplay() {
+            var dat = "";
+            student.forEach(function (d, i) {
+                dat += "<tr style='color:" + d.clr + "'><td>" + (i + 1) + "</td><td>" + d.rollno + "</td><td>" + d.Name + "</td><td>" + d.english + "</td><td>"
+                    + d.science + "</td><td>" + d.maths + "</td><td>" + d.total + "</td><td>" + d.Percentage + "</td><td>" + d.Result + "</td><td>" + d.stateName + "</td><td>"
+                    + d.cityName + "</td><td><input type='button' value='Edit' onclick='EditData("+i+")'/> <input type='button' value='Delete' onclick='DeleteData("+i+")'/> </td><tr>"
+            })
+            document.getElementById("tbldata").innerHTML = dat;
+        }
+        
+
+        var arr_State = [{ "Stateid": 1, "StateName": "MH" }, { "Stateid": 2, "StateName": "MP" }];
+        function State_fun() {
+            var data = "<option selected disabled>Select State</option>";
+            arr_State.forEach(function (d, i) {
+                data += "<option value=" + d.Stateid + ">" + d.StateName + "</option>";
+            })
+            document.getElementById("state_nm").innerHTML = data;
+        }
+
+        var arr_city = [{ "CityId": 1, "CityName": "Pune", "Stateid": 1 },
+            { "CityId": 2, "CityName": "Nashik", "Stateid": 1 },
+            { "CityId": 3, "CityName": "Indore", "Stateid": 2 },
+            { "CityId": 4, "CityName": "Bhopal", "Stateid": 2 },
+
+        ];
+        function City_fun() {
+            var state = document.getElementById("state_nm").value;
+            var data = "<option selected disabled>Select City</option>";
+            arr_city.forEach(function (d, i) {
+                if (d.Stateid == state) {
+                    data += "<option value=" + d.CityId + ">" + d.CityName + "</option>";
+                }
+            })
+            document.getElementById("city_nm").innerHTML = data;
+        }
+        
+
+        function SearchRollno() {
+            var rolno = document.getElementById("sr").value;
+            if (rolno != "") {
+
+                var dat = "";
+
+                student.forEach(function (d, i) {
+                    if (d.rollno == rolno) {
+                        dat += "<tr style='color:" + d.clr + "'><td>" + (i + 1) + "</td><td>" + d.rollno + "</td><td>" + d.Name + "</td><td>" + d.english + "</td><td>"
+                            + d.science + "</td><td>" + d.maths + "</td><td>" + d.total + "</td><td>" + d.Percentage + "</td><td>" + d.Result + "</td><td>"
+                            + d.cityName + "</td><td><input type='button' value='Edit' onclick='EditData(" + i + ")'/> <input type='button' value='Delete' onclick='DeleteData(" + i + ")'/> </td><tr>"
+                    }
+
+
+                })
+                document.getElementById("tbldata").innerHTML = dat;
+            }
+            else {
+                dataDisplay();
+            }
+        }
+
+        function SearchName() {
+            var name_1 = document.getElementById("sn").value;
+            if (name_1 != "") {
+
+                var dat = "";
+
+                student.forEach(function (d, i) {
+                    if (d.Name.toLowerCase().includes(name_1.toLowerCase())) {
+                        dat += "<tr style='color:" + d.clr + "'><td>" + (i + 1) + "</td><td>" + d.rollno + "</td><td>" + d.Name + "</td><td>" + d.english + "</td><td>"
+                            + d.science + "</td><td>" + d.maths + "</td><td>" + d.total + "</td><td>" + d.Percentage + "</td><td>" + d.Result + "</td><td>"
+                            + d.cityName + "</td><td><input type='button' value='Edit' onclick='EditData(" + i + ")'/> <input type='button' value='Delete' onclick='DeleteData(" + i + ")'/> </td><tr>"
+                    }
+                })
+                document.getElementById("tbldata").innerHTML = dat;
+            }
+            else
+            {
+                dataDisplay();
+            }
+        }
+    </script>
+</head>
+<body onload="State_fun()">
+    <table>
+        <tr>
+            <th>Roll No.</th>
+            <th><input type="number" id="r1" /></th>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <th><input type="text" id="n1" /></th>
+        </tr>
+        <tr>
+            <th>English</th>
+            <th><input type="number" id="t1" onchange="calculate()" /></th>
+        </tr>
+        <tr>
+            <th>Science</th>
+            <th><input type="number" id="t2" onchange="calculate()" /></th>
+        </tr>
+        <tr>
+            <th>Maths</th>
+            <th><input type="number" id="t3" onchange="calculate()" /></th>
+        </tr>
+        <tr>
+            <th>Total</th>
+            <th><input type="number" id="t4" disabled /></th>
+        </tr>
+        <tr>
+            <th>Percentage</th>
+            <th><input type="number" id="t5" disabled /></th>
+        </tr>
+        <tr>
+            <th>Result</th>
+            <th><input type="text" id="t6" disabled /></th>
+        </tr>
+        <tr>
+            <th>Select State</th>
+            <th>
+                <select id="state_nm" onchange="City_fun()">
+                    <option selected disabled>Select State</option>
+                </select>
+                
+            </th>
+        </tr>
+        <tr>
+            <th>Select City</th>
+            <th>
+                <select id="city_nm">
+                    <option selected disabled>Select City</option>
+                </select>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <input type="button" value="Submit" onclick="Adddata()" />
+                <input type="button" value="Update" onclick="UpdateData()" />
+            </th>
+        </tr>
+
+    </table>
+    <hr />
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Sr No.</th>
+                <th>
+                    Roll No.<br>
+                    <input type="number" id="sr" placeholder="Search by Roll No" onkeyup="SearchRollno()" />
+                </th>
+                <th>
+                    Name<br />
+                    <input type="text" id="sn" placeholder="Search By Name" onkeyup="SearchName()" />
+                </th>
+                <th>English</th>
+                <th>science</th>
+                <th>maths</th>
+                <th>Total</th>
+                <th>Percentage</th>
+                <th>Result</th>
+                <th>State</th>
+                <th>City</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="tbldata"></tbody>
+    </table>
+</body>
+</html>

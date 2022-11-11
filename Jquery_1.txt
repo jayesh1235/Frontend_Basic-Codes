@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="js/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#btnsubmit").click(function () {
+                var a = Number($("#t1").val());
+                var b = Number($("#t2").val());
+                var add = a + b;
+                var sub = a - b;
+                var mul = a * b;
+                var div = a / b;
+                $("#a1").html("Add is : " + add);
+                $("#a2").html("Sub is : " + sub);
+                $("#a3").html("Mul is : " + mul);
+                $("#a4").html("Div is : " + div);
+            })
+
+        })
+    </script>
+</head>
+<body>
+    A <input type="text" id="t1" /><br />
+    B <input type="text" id="t2" /><br />
+    <input type="button" value="add" id="btnsubmit" />
+    <h1 id="a1"></h1>
+    <h1 id="a2"></h1>
+    <h1 id="a3"></h1>
+    <h1 id="a4"></h1>
+
+</body>
+</html>

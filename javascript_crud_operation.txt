@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+    <script>
+        var stud = [];
+        var index = "";
+        // when submit button is clicked the DataEntry() function will Executes
+        function DataEntry() {
+            var n = document.getElementById("n1").value;
+            var r = document.getElementById("r1").value;
+            var c = document.getElementById("s1").value;
+
+            var temp = { "name": n, "rollno": r, "cityname": c };
+            stud.push(temp);
+            ClearData();
+            City_function();
+            DataDisplay();
+        }
+        //Clear Data Function
+        function ClearData() {
+            document.getElementById("n1").value = "";
+            document.getElementById("r1").value = "";
+            document.getElementById("s1").value = "";
+
+        }
+
+        // Data Display In Table
+        function DataDisplay() {
+            var data = "";
+            stud.forEach(function (d, i) {
+                data += "<tr><td>" + d.name + "</td><td>" + d.rollno + "</td><td>" + d.cityname + "</td><td><input type='button' value='Edit' onclick='EditData(" + i + ")'/> <input type='button' value='Delete' onclick='DeleteData(" + i + ")'/> </td></tr>"
+            })
+            document.getElementById("tabledata").innerHTML = data;
+        }
+        //Edit Data Function
+        function EditData(s) {
+            index = s;
+            var d = stud[s];
+            document.getElementById("n1").value = d.name;
+            document.getElementById("r1").value = d.rollno;
+            document.getElementById("s1").value = d.cityname;
+        }
+        //Update Function
+        function UpdateEntry() {
+            var n = document.getElementById("n1").value;
+            var r = document.getElementById("r1").value;
+            var c = document.getElementById("s1").value;
+
+            var temp = { "name": n, "rollno": r, "cityname": c };
+            stud[index] = temp;
+            ClearData();
+            City_function();
+            DataDisplay();
+        }
+        //DeleteData Function
+        function DeleteData(j) {
+            stud.splice(j, 1);
+            DataDisplay();
+        }
+        //DropDown menu Function
+        var city_nm = [{ "CityName": "Pune" }, { "CityName": "Nashik" }, { "CityName": "Mumbai" }, { "CityName": "Jalgaon" }]
+        function City_function() {
+            var c_nm = "<option selected disabled>Select City</option>";
+            city_nm.forEach(function (d, i) {
+                c_nm += "<option>" + d.CityName + "</option>";
+            })
+            document.getElementById("s1").innerHTML = c_nm;
+        }
+    </script>
+</head>
+<body onload="City_function()">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th><input type="text" placeholder="Name" id="n1" /></th>
+        </tr>
+        <tr>
+            <th>Roll No.</th>
+            <th><input type="text" placeholder="Roll No." id="r1" /></th>
+        </tr>
+        <tr>
+            <th>City</th>
+            <th>
+                <select id="s1">
+                    <option></option>
+                </select>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <input type="button" value="Submit" onclick="DataEntry()" />
+                <input type="button" value="Update" onclick="UpdateEntry()" />
+            </th>
+        </tr>
+    </table>
+    <hr />
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Roll No.</th>
+                <th>City</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="tabledata"></tbody>
+    </table>
+
+</body>
+</html>

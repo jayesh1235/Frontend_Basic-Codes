@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    A <input type="text" id="Value_1" />
+    <input type="button" value="odd_even" onclick="odd_even_fun()" />
+    <h1 id="Even_odd_op"></h1>
+
+    <script>
+        function odd_even_fun() {
+            var a = Number(document.getElementById("Value_1").value);
+            if (a % 2 == 0) {
+                document.getElementById("Even_odd_op").innerHTML = "The Number is Even = " + a;
+            }
+            else {
+                document.getElementById("Even_odd_op").innerHTML = "The Number is odd = " + a;
+            }
+        }
+    </script>
+</body>
+</html>

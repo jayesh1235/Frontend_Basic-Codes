@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="js/jquery.min.js"></script>
+    <script>
+        var student = [];
+        $(document).ready(function () {
+            $("#btnsumbit").click(function () {
+                addData();
+            })
+        })
+        function addData() {
+            var r = $("#t1").val();
+            var n = $("#t2").val();
+            var e = Number($("#t3").val());
+            var m = Number($("#t4").val());
+            var s = Number($("#t5").val());
+            var t = (e + m + s);
+            var p = (t / 3).toFixed(2);
+            r1 = "fail";
+            if (p > 35) {
+                r1 = "Pass"
+            }
+
+            var st = { "rollno": r, "name": n ,"English":e,"maths":m,"Science":s,"Total":t,"Percentage":p,"result":r1};
+            student.push(st);
+            ClearData();
+            DisplayData();
+        }
+        function ClearData() {
+            $("#t1").val("");
+            $("#t2").val("");
+            $("#t3").val("");
+            $("#t4").val("");
+            $("#t5").val("");
+        }
+        function DisplayData() {
+           $("#tbldata").empty();
+           $.each(student, function (i, d) {
+               $("#tbldata").append("<tr><td>" + d.rollno + "</td><td>" + d.name + "</td><td>" + d.English + "</td><td>" + d.maths + "</td><td>" + d.Science + "</td><td>" + d.Total + "</td><td>" + d.Percentage + "</td><td>" + d.result + "</td></tr>")
+            })
+        }
+    </script>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Roll NO</th>
+            <th><input type="text" id="t1" /></th>
+        </tr>
+
+        <tr>
+            <th>Name</th>
+            <th><input type="text" id="t2" /></th>
+        </tr>
+        <tr>
+            <th>English</th>
+            <th><input type="number" id="t3" /></th>
+        </tr>
+        <tr>
+            <th>Maths</th>
+            <th><input type="number" id="t4" /></th>
+        </tr>
+        <tr>
+            <th>Science</th>
+            <th><input type="number" id="t5" /></th>
+        </tr>
+        <tr>
+            <th><input type="button" value="sumbit" id="btnsumbit" /></th>
+        </tr>
+
+    </table>
+    <hr />
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Roll NO</th>
+                <th>Name</th>
+                <th>English</th>
+                <th>Maths</th>
+                <th>science</th>
+                <th>Total</th>
+                <th>percentage</th>
+                <th>result</th>
+            </tr>
+
+        </thead>
+        <tbody id="tbldata"></tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link href="pratice_css.css" rel="stylesheet" />
+    <script>
+        var student = [];
+        var color = "";
+        var index = "";
+        function AddData() {
+            var n = document.getElementById("t1").value;
+            var nm = n.toUpperCase();
+            var prn = document.getElementById("t2").value;
+            var e = Number(document.getElementById("t3").value);
+            var s = Number(document.getElementById("t4").value);
+            var m = Number(document.getElementById("t5").value);
+            var t = Number(document.getElementById("t6").value);
+            var per = Number(document.getElementById("t7").value);
+            var r = document.getElementById("t8").value;
+
+            var s_nm = document.getElementById("state_nm");
+            var statenm = s_nm.options[s_nm.selectedIndex].text;
+            var c_nm = document.getElementById("city_nm");
+            var citynm = c_nm.options[c_nm.selectedIndex].text;
+
+
+            var temp = { "Name": nm, "prnno": prn, "English": e, "Science": s, "Maths": m, "Total": t, "Percentage": per, "Result": r, "statename":statenm,"cityname": citynm, "clr": color };
+            student.push(temp);
+            ClearData();
+            City_fun();
+            DataDisplay();
+        }
+        function Calculate() {
+            var e = Number(document.getElementById("t3").value);
+            var s = Number(document.getElementById("t4").value);
+            var m = Number(document.getElementById("t5").value);
+
+            var t = (e + s + m);
+            document.getElementById("t6").value = t;
+
+            var per = (t / 3).toFixed(2);
+            document.getElementById("t7").value = per;
+            var r = "";
+            if (per >= 40 && per <= 50) {
+                r = "Pass";
+                color = "Green";
+            }
+            else {
+                if (per >= 51 && per <= 60) {
+                    r = "Second Class";
+                    color = "brown";
+                }
+                else {
+                    if (per >= 61 && per <= 70) {
+                        r = "First Class";
+                        color = "blue";
+                    }
+                    else {
+                        if (per >= 71) {
+                            r = "First Class With Distinction";
+                            color = "violet";
+                        }
+                        else {
+                            r = "Fail";
+                            color = "Red"
+                        }
+                    }
+                }
+            }
+            document.getElementById("t8").value = r;
+
+        }
+        function ClearData() {
+            document.getElementById("t1").value = "";
+            document.getElementById("t2").value = "";
+            document.getElementById("t3").value = "";
+            document.getElementById("t4").value = "";
+            document.getElementById("t5").value = "";
+            document.getElementById("t6").value = "";
+            document.getElementById("t7").value = "";
+            document.getElementById("t8").value = "";
+            document.getElementById("state_nm").value = "";
+            document.getElementById("city_nm").value = "";
+            State_fun();
+            City_fun();
+        }
+        function DataDisplay() {
+            var d = "";
+            for (i = 0; i < student.length; i++) {
+                d += "<tr style='color:" + student[i].clr + "'><td>" + (i + 1) + "</td><td>" + student[i].Name + "</td><td>" + student[i].prnno + "</td><td>"
+                    + student[i].English + "</td><td>" + student[i].Science + "</td><td>" + student[i].Maths + "</td><td>" + student[i].Total + "</td><td>"
+                    + student[i].Percentage +"%"+ "</td><td>" + student[i].Result + "</td><td>" + student[i].statename + "</td><td>" + student[i].cityname +
+                    "</td><td><input type='button' class='btn btn-warning' value='Edit' onclick='EditData(" + i + ")'/>  <input type='button' class='btn btn-danger' value='Delete' onclick='DeleteData(" + i + ")'/></td></tr>";
+            }
+            document.getElementById("tbldata").innerHTML = d;
+        }
+        function EditData(s) {
+            index = s;
+            var dt = student[s];
+            document.getElementById("t1").value = dt.Name;
+            document.getElementById("t2").value = dt.prnno;
+            document.getElementById("t3").value = dt.English;
+            document.getElementById("t4").value = dt.Science;
+            document.getElementById("t5").value = dt.Maths;
+            document.getElementById("t6").value = dt.Total;
+            document.getElementById("t7").value = dt.Percentage;
+            document.getElementById("t8").value = dt.Result;
+            document.getElementById("state_nm").value = dt.statename;
+            document.getElementById("city_nm").value = dt.cityname;
+        }
+        function UpdateData() {
+            var n = document.getElementById("t1").value;
+            var nm = n.toUpperCase();
+            var prn = document.getElementById("t2").value;
+            var e = Number(document.getElementById("t3").value);
+            var s = Number(document.getElementById("t4").value);
+            var m = Number(document.getElementById("t5").value);
+            var t = Number(document.getElementById("t6").value);
+            var per = Number(document.getElementById("t7").value);
+            var r = document.getElementById("t8").value;
+            var s_nm = document.getElementById("state_nm");
+            var statenm = s_nm.options[s_nm.selectedIndex].text;
+            var c_nm = document.getElementById("city_nm");
+            var citynm = c_nm.options[c_nm.selectedIndex].text;
+            Calculate();
+
+            var temp = { "Name": nm, "prnno": prn, "English": e, "Science": s, "Maths": m, "Total": t, "Percentage": per, "Result": r, "statename": statenm, "cityname": citynm, "clr": color };
+            student[index] = temp;
+            ClearData();
+            DataDisplay();
+
+        }
+        function DeleteData(j) {
+            student.splice(j, 1);
+            DataDisplay();
+        }
+        
+        function DataDestroy(cnt,j1) {
+            student.splice(j1, cnt);
+            DataDisplay();
+
+        }
+        function SearchName() {
+            var nm = document.getElementById("sernm").value;
+            if (nm != "") {
+                var data = "";
+                student.forEach(function (d, i) {
+                    if (d.Name.toLowerCase().includes(nm.toLowerCase())) {
+                        data += "<tr style='color:" + d.clr + "'><td>" + (i + 1) + "</td><td>" + d.Name + "</td><td>" + d.prnno + "</td><td>" + d.English + "</td><td>" + d.Science + "</td><td>"
+                            + d.Maths + "</td><td>" + d.Total + "</td><td>" + d.Percentage +"%"+ "</td><td>" + d.Result + "</td><td>" + d.statename + "</td><td>" + d.cityname + "</td><td><input type='button' class='btn btn-warning' value='Edit' onclick='EditData(" + i + ")'/>  <input type='button' class='btn btn-danger' value='Delete' onclick='DeleteData(" + i + ")'/></td></tr>";
+                    }
+                })
+                document.getElementById("tbldata").innerHTML = data;
+            }
+            else {
+                DataDisplay();
+            }
+        }
+        function SearchRollno() {
+            var rno = document.getElementById("serroll").value;
+            if (rno != "") {
+                var data = "";
+                student.forEach(function (d, i) {
+                    if (d.prnno == rno) {
+                        data += "<tr style='color:" + d.clr + "'><td>" + (i + 1) + "</td><td>" + d.Name + "</td><td>" + d.prnno + "</td><td>" + d.English + "</td><td>" + d.Science + "</td><td>"
+                            + d.Maths + "</td><td>" + d.Total + "</td><td>" + d.Percentage +"%"+ "</td><td>" + d.Result + "</td><td>" + d.statename + "</td><td>" + d.cityname + "</td><td><input type='button' class='btn btn-warning' value='Edit' onclick='EditData(" + i + ")'/> | <input type='button' class='btn btn-danger' value='Delete' onclick='DeleteData(" + i + ")'/></td></tr>";
+                    }
+                })
+                document.getElementById("tbldata").innerHTML = data;
+            }
+            else {
+                DataDisplay();
+            }
+        }
+
+        var arr_State = [{ "Stateid": 1, "StateName": "Maharastra" },
+            { "Stateid": 2, "StateName": "Madhya Pradesh" },
+            { "Stateid": 3, "StateName": "Gujarat" },
+             { "Stateid": 4, "StateName": "Rajasthan" },
+              { "Stateid": 5, "StateName": "Uttar Pradesh" }
+        ];
+        function State_fun() {
+            var data = "<option selected disabled>Select State</option>";
+            arr_State.forEach(function (d, i) {
+                data += "<option value=" + d.Stateid + ">" + d.StateName + "</option>";
+            })
+            document.getElementById("state_nm").innerHTML = data;
+        }
+
+        var arr_city = [{ "CityId": 1, "CityName": "Pune", "Stateid": 1 },
+            { "CityId": 2, "CityName": "Nashik", "Stateid": 1 },
+            { "CityId": 3, "CityName": "Indore", "Stateid": 2 },
+            { "CityId": 4, "CityName": "Bhopal", "Stateid": 2 },
+            { "CityId": 4, "CityName": "Ahmdabad", "Stateid": 3},
+            { "CityId": 4, "CityName": "Surat", "Stateid": 3 },
+            { "CityId": 4, "CityName": "Jaipur", "Stateid": 4 },
+            { "CityId": 4, "CityName": "Udaipur", "Stateid": 4 },
+            { "CityId": 4, "CityName": "Lucknow", "Stateid": 5 },
+            { "CityId": 4, "CityName": "Kanpur", "Stateid": 5 }
+        ];
+        function City_fun() {
+            var state = document.getElementById("state_nm").value;
+            var data = "<option selected disabled>Select City</option>";
+            arr_city.forEach(function (d, i) {
+                if (d.Stateid == state) {
+                    data += "<option value=" + d.CityId + ">" + d.CityName + "</option>";
+                }
+            })
+            document.getElementById("city_nm").innerHTML = data;
+        }
+        function LogOut() {
+            window.location.href = "Login page.html";
+            localStorage.removeItem("username");
+        }
+
+
+    </script>
+</head>
+<body onload="State_fun()">
+    <div class="css1" >
+        <div class="col-md-6 col-md-offset-3" >
+            <div class="panel-primary">
+                <div class="panel-heading">
+                     <h1 class="panel-title"><i>Student Result</i></h1>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="panel-body">
+                    <div class="col-md-6" align="center">
+                        <table>
+                            <tr>
+                                <th>Name</th>
+                                <th><input class="form-control" placeholder="Name" type="text" id="t1" /></th>
+                            </tr>
+                            <tr>
+                                <th>Roll NO.</th>
+                                <th><input class="form-control" placeholder="Roll No." type="text" id="t2" /></th>
+                            </tr>
+                            <tr>
+                                <th>English</th>
+                                <th><input class="form-control" type="number" id="t3" onchange="Calculate()" /></th>
+                            </tr>
+                            <tr>
+                                <th>Science</th>
+                                <th><input class="form-control" type="number" id="t4" onchange="Calculate()" /></th>
+                            </tr>
+                            <tr>
+                                <th>Maths</th>
+                                <th><input class="form-control" type="number" id="t5" onchange="Calculate()" /></th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6" align="center">
+                        <table>
+                            <tr>
+                                <th>Total</th>
+                                <th><input class="form-control" type="number" id="t6" disabled /></th>
+                            </tr>
+                            <tr>
+                                <th>Percentage</th>
+                                <th><input class="form-control" type="number" id="t7" disabled /></th>
+                            </tr>
+                            <tr>
+                                <th>Result</th>
+                                <th><input class="form-control" type="text" id="t8" disabled /></th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    State
+                                </th>
+                                <th>
+                                    <select id="state_nm" class="form-control" onchange="City_fun()">
+                                        <option selected disabled>select State</option>
+                                    </select>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>City Name</th>
+                                <th>
+                                    <select class="form-control" id="city_nm">
+                                        <option selected disabled>Select City</option>
+                                    </select>
+                                </th>
+
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-md-offset-3" align="center">
+            <div class="panel-footer">
+                <button class="btn btn-default" data-toggle="modal" data-target="#mymodal1" onclick="AddData()">Sumbit</button>
+                <div class="modal" id="mymodal1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button class="close" data-dismiss="modal">&times;</button>
+                                <h1 class="modal-title">Fromed Submitted..!</h1>
+                            </div>
+                            <div class="modal-body">
+                                The Formed Submitted Sucessfully
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-warning" data-dismiss="modal">Okay</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-success" onclick="UpdateData()">Update</button>
+                <button class="btn btn-primary" onclick="ClearData()">Clear Data</button>
+                <input class="btn btn-danger" type="button" value="Log Out" onclick="LogOut()" />
+            </div>
+        </div>
+        <div class="col-md-12">
+            <hr />
+        </div>
+
+        <div class="col-md-12">
+            <table border="1" cellpadding="5" cellspacing="1" class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Sr no.</th>
+                        <th>
+                            Name<br>
+                            <input type="text" placeholder="Search by Name" id="sernm" onkeyup="SearchName()" />
+                        </th>
+                        <th>
+                            Roll No.<br>
+                            <input type="number" placeholder="Search by Roll no" id="serroll" onkeyup="SearchRollno()" />
+                        </th>
+                        <th>English</th>
+                        <th>Science</th>
+                        <th>Maths</th>
+                        <th>Total</th>
+                        <th>Percentage</th>
+                        <th>Result</th>
+                        <th>State</th>
+                        <th>City</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tbldata"></tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

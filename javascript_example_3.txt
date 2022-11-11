@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script>
+        var student = [];
+        var color = "";
+        function Adddata() {
+            var e = Number(document.getElementById("t1").value);
+            var s = Number(document.getElementById("t2").value);
+            var m = Number(document.getElementById("t3").value);
+            var t = Number(document.getElementById("t4").value);
+            var per = Number(document.getElementById("t5").value);
+            var res = document.getElementById("t6").value;
+
+
+            var st = { "english": e, "science": s, "maths": m, "total": t, "Percentage": per, "Result": res,"clr":color };
+            student.push(st);
+            clearData();
+            dataDisplay();
+        }
+        function calculate() {
+            var e = Number(document.getElementById("t1").value);
+            var s = Number(document.getElementById("t2").value);
+            var m = Number(document.getElementById("t3").value);
+
+            var t = (e + s + m);
+            document.getElementById("t4").value = t;
+
+            var per = (t / 3).toFixed(2);
+            document.getElementById("t5").value = per;
+
+            var res = "Fail";
+            color = "Red";
+            if (per > 35) {
+                res = "Pass";
+                color = "Green";
+            }
+            document.getElementById("t6").value = res;
+           
+        }
+        function clearData() {
+            document.getElementById("t1").value = "";
+            document.getElementById("t2").value = "";
+            document.getElementById("t3").value = "";
+            document.getElementById("t4").value = "";
+            document.getElementById("t5").value = "";
+            document.getElementById("t6").value = "";
+        }
+        function dataDisplay() {
+            var d = "";
+            for (i = 0; i < student.length; i++) {
+                d += "<tr style='color:"+student[i].clr+"'><td>" + student[i].english + "</td><td>" + student[i].science + "</td><td>" + student[i].maths + "</td><td>" + student[i].total + "</td><td>" + student[i].Percentage + "</td><td>" + student[i].Result + "</td></tr>";
+
+            }
+            document.getElementById("tbldata").innerHTML = d;
+        }
+    </script>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>English</th>
+            <th><input type="number" id="t1" onchange="calculate()"/></th>
+        </tr>
+        <tr>
+            <th>Science</th>
+            <th><input type="number" id="t2" onchange="calculate()" /></th>
+        </tr>
+        <tr>
+            <th>Maths</th>
+            <th><input type="number" id="t3" onchange="calculate()" /></th>
+        </tr>
+        <tr>
+            <th>Total</th>
+            <th><input type="number" id="t4" disabled/></th>
+        </tr>
+        <tr>
+            <th>Percentage</th>
+            <th><input type="number" id="t5" disabled /></th>
+        </tr>
+        <tr>
+            <th>Result</th>
+            <th><input type="text" id="t6" disabled/></th>
+        </tr>
+        <tr>
+            <th><input type="button" value="Submit" onclick="Adddata()" /></th>
+        </tr>
+    </table>
+    <hr />
+    <table border="1">
+        <thead>
+            <tr>
+                <th>English</th>
+                <th>science</th>
+                <th>maths</th>
+                <th>Total</th>
+                <th>Percentage</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody id="tbldata" ></tbody>
+    </table>
+</body>
+</html>
